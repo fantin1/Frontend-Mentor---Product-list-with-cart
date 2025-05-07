@@ -48,22 +48,23 @@ html {
 @media (min-width: 900px){
     .desserts-cart-grid{
         display: grid;
-        grid-template-columns: 3fr 1fr;
+        grid-template-columns: 2fr 1fr;
+        gap: 2em;
     }
     
     .desserts-grid{
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 2em;
+        gap: 1em;
     }
 
 }
 
 body{
     width: 80vw;
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 3em auto;
-    background-color: var(--clr-neutral--50);
+    background-color: var(--clr-neutral--100);
     font-weight: var(--fw-normal);
 }
 
@@ -71,19 +72,28 @@ body{
     --button-top: -2em;
 }
 
+.desserts-header{
+    margin-bottom: 1em;
+}
+
 .cart-btn{
+    /* position */
     width: 70%;
     margin: 0 auto 1em auto;
     position: relative;
     top: var(--button-top);
-    padding: 1em 2em;
-    background-color: white;
-    border: 1px solid var(--clr-neutral--500);
-    border-radius: 2em;
+    /* layout */
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: .5em;
     align-items: center;
-    font-size: 1rem;
+    padding: .7em 0;
+    border-radius: 2em;
+    /* styling */
+    background-color: var(--clr-neutral--50);
+    border: 1px solid var(--clr-neutral--500);
+    font-size: .7rem;
+    font-weight: var(--fw-bold);
     color: var(--clr-neutral--900);
 }
 
@@ -92,23 +102,50 @@ body{
 }
 
 .dessert__text{
-    margin-top: var(--button-top);
+    margin-top: calc(var(--button-top) );
+    display: flex;
+    flex-direction: column;
+    gap: .2em;
+    font-size: .8rem;
 }
 
 .dessert-type{
-    font-size: 1.1rem;
+    font-size: 1em;
     font-weight: var(--fw-normal);
     color: var(--clr-neutral--500);
 }
 
 .dessert-name{
-    font-size: 1.2rem;
+    font-size: 1.1em;
     font-weight: var(--fw-bold);
     color: var(--clr-neutral--900);
 }
 
 .price{
-    font-size: 1.2rem;
+    font-size: 1.2em;
     font-weight: var(--fw-bold);
     color: var(--clr-primary--1);
+}
+
+.cart{
+    width: 100%;
+    height: fit-content;
+    background-color: var(--clr-neutral--50);
+    padding: 1em;
+}
+
+.cart-title{
+    color: var(--clr-primary--1);
+    font-size: 1.4rem;
+    font-weight: var(--fw-bolder);
+}
+
+.cart-empty{
+    display: grid;
+    gap: 1em;
+    margin: 1em 0;
+}
+
+.cart-empty * {
+    margin: 0 auto;
 }
