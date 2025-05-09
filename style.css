@@ -40,9 +40,13 @@
 }
 
 svg,
-img {
+img, picture{
     display: block;
     max-width: 100%;
+}
+
+picture img{
+    border-radius: inherit;
 }
 
 html {
@@ -53,7 +57,7 @@ html {
     display: none !important;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 768px) {
     .desserts-cart-grid {
         display: grid;
         grid-template-columns: 2fr 1fr;
@@ -90,7 +94,7 @@ body {
 }
 
 .dessert-img-selected{
-    border: 2px solid var(--clr-primary--1);
+    outline: 2px solid var(--clr-primary--1);
 }
 
 
