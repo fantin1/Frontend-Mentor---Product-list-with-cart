@@ -1,7 +1,5 @@
 'use strict'
 
-
-
 fetch('./data.json').then((response) => response.json()).then((json) => {
     const products = json;
     populateDesserts(products);
@@ -12,12 +10,16 @@ fetch('./data.json').then((response) => response.json()).then((json) => {
 
     const addCartBtns = document.querySelectorAll('.add-btn');
     addCartBtns.forEach(btn => {
-        btn.addEventListener('click', function(){addToCart(btn, cart)});
+        btn.addEventListener('click', function(){incrementItem(btn, cart)});
     })
     const incBtns = document.querySelectorAll('.increment-btn');
     incBtns.forEach(btn => {
-        btn.addEventListener('click', function(){addToCart(btn, cart)});
+        btn.addEventListener('click', function(){incrementItem(btn, cart)});
     })
+    const decBtns = document.querySelectorAll('.decrement-btn');
+    decBtns.forEach(btn => btn.addEventListener('click', function(){decrementItem(btn, cart);}))
+    const rmvBtns = document.querySelectorAll('.icon-btn');
+    rmvBtns.forEach(btn => btn.addEventListener('click', function(){removeItem(btn, quant);}))
 })
 
 const dessertsGrid = document.querySelector('.desserts-grid');
@@ -31,13 +33,15 @@ let cartEmpty;
 let total = 0;
 let numProds = 0;
 
-function addToCart(btn, cart){
+function incrementItem(btn, cart){
+    /* Add to cart btn */
     const qtBtn = btn.closest('.dessert').querySelector('.quantity-btn');
     if(btn.classList.contains('add-btn')){
         btn.classList.add('hidden');
         qtBtn.classList.remove('hidden');
         btn.closest('.dessert').querySelector('.dessert-img').classList.add('dessert-img-selected');
     }
+    /* Dealing with cart */
     const index = btn.dataset.index;
     const c = cart[index];
     c.quant++;
@@ -50,7 +54,7 @@ function addToCart(btn, cart){
         cartEmpty = false;
         totalCarbon.classList.remove('hidden');
     }
-    if(cart[index].quant > 1){
+    if(c.quant > 1){
         const item = cartOrders.querySelector(`.cart-item[data-index="${index}"]`);
         item.querySelector('.order-quant').textContent = `${c.quant}x`;
         item.querySelector('.order-item-total').textContent = `$${c.price * c.quant}`;
@@ -82,6 +86,60 @@ function addToCart(btn, cart){
     totalDisplay.textContent = `$${total.toFixed(2)}`;
 }
 
+function decrementItem(btn, cart){
+    const index = btn.dataset.index;
+    const c = cart[index];
+    c.quant--;
+    numProds--;
+    total -= c.price;
+    cartEmpty = true;
+        cart.forEach(cartItem => {if(cartItem.quant > 0) cartEmpty = false});
+
+    const qtBtn = btn.closest('.dessert').querySelector('.quantity-btn');
+    const cartBtn = btn.closest('.dessert').querySelector('.add-btn');
+    const item = cartOrders.querySelector(`.cart-item[data-index="${index}"]`);
+    if(c.quant === 0){
+        qtBtn.classList.add('hidden');
+        cartBtn.classList.remove('hidden');
+        item.remove();
+        if(cartEmpty) {
+            cartContainer.querySelector('.cart-empty').classList.remove('hidden');
+            totalCarbon.classList.add('hidden');
+        }
+    }else{
+        qtBtn.closest('.cart-btn').querySelector('.quantity').textContent = `${cart[index].quant}`;
+        item.querySelector('.order-quant').textContent = `${c.quant}x`;
+        item.querySelector('.order-item-total').textContent = `$${c.price * c.quant}`;
+    }
+
+    cartDisplay.textContent = numProds;
+    totalDisplay.textContent = `$${total.toFixed(2)}`;
+}
+
+function removeItem(btn, cart){
+    console.log('hi')
+    const index = btn.dataset.index;
+    const c = cart[index];
+    numProds-= c.quant;
+    total -= c.price * c.quant;
+    c.quant = 0;
+    cartEmpty = true;
+    cart.forEach(cartItem => {if(cartItem.quant > 0) cartEmpty = false});
+    const qtBtn = btn.closest('.dessert').querySelector('.quantity-btn');
+    const cartBtn = btn.closest('.dessert').querySelector('.add-btn');
+    const item = cartOrders.querySelector(`.cart-item[data-index="${index}"]`);
+    qtBtn.classList.add('hidden');
+    cartBtn.classList.remove('hidden');
+    item.remove();
+
+    if(cartEmpty) {
+        cartContainer.querySelector('.cart-empty').classList.remove('hidden');
+        totalCarbon.classList.add('hidden');
+    }
+
+    
+
+}
 
 function initCart(products, cart){
     products.forEach((p) => {
