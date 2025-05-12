@@ -18,8 +18,7 @@ fetch('./data.json').then((response) => response.json()).then((json) => {
     })
     const decBtns = document.querySelectorAll('.decrement-btn');
     decBtns.forEach(btn => btn.addEventListener('click', function(){decrementItem(btn, cart);}))
-    const rmvBtns = document.querySelectorAll('.icon-btn');
-    rmvBtns.forEach(btn => btn.addEventListener('click', function(){removeItem(btn, quant);}))
+    
 })
 
 const dessertsGrid = document.querySelector('.desserts-grid');
@@ -48,7 +47,7 @@ function incrementItem(btn, cart){
     numProds ++;
     total += c.price;
     qtBtn.closest('.cart-btn').querySelector('.quantity').textContent = `${cart[index].quant}`;
-
+    
     if(cartEmpty) {
         cartContainer.querySelector('.cart-empty').classList.add('hidden');
         cartEmpty = false;
@@ -81,6 +80,10 @@ function incrementItem(btn, cart){
         </div>
 `
         )
+        const item = cartOrders.querySelector(`.cart-item[data-index="${index}"]`);
+        const rmvBtn = item.querySelector('.remove-btn');
+        console.log(rmv)
+        rmvBtn.addEventListener('click', function(){removeItem(btn, quant);})
     }
     cartDisplay.textContent = numProds;
     totalDisplay.textContent = `$${total.toFixed(2)}`;
