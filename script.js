@@ -82,9 +82,9 @@ function incrementItem(btn, cart){
         )
         const item = cartOrders.querySelector(`.cart-item[data-index="${index}"]`);
         const rmvBtn = item.querySelector('.remove-btn');
-        console.log(rmv)
-        rmvBtn.addEventListener('click', function(){removeItem(btn, quant);})
+        rmvBtn.addEventListener('click', function(){removeItem(btn, cart);})
     }
+    console.log(total);
     cartDisplay.textContent = numProds;
     totalDisplay.textContent = `$${total.toFixed(2)}`;
 }
@@ -120,7 +120,6 @@ function decrementItem(btn, cart){
 }
 
 function removeItem(btn, cart){
-    console.log('hi')
     const index = btn.dataset.index;
     const c = cart[index];
     numProds-= c.quant;
@@ -139,9 +138,6 @@ function removeItem(btn, cart){
         cartContainer.querySelector('.cart-empty').classList.remove('hidden');
         totalCarbon.classList.add('hidden');
     }
-
-    
-
 }
 
 function initCart(products, cart){
