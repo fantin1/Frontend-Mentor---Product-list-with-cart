@@ -128,7 +128,7 @@ body {
     color: var(--clr-neutral--900);
 }
 
-.quantity-btn {
+.btn-container {
     background-color: var(--clr-primary--1);
     border: 1px solid var(--clr-primary--1);
     font-size: .7rem;
