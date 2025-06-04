@@ -114,10 +114,8 @@ class Cart {
 
     addToCart(product) {
         if (this.#count === 0) this.startCart();
-        console.log(product.count);
 
         if (product.count === 0) {
-            console.log('hiiiiii')
             const html = `
             <div class="cart-item" data-index="${product.index}">
                 <div class="item-info">
@@ -216,6 +214,4 @@ fetch('./data.json').then((response) => response.json()).then((json) => {
 })
 
 let cartEmpty = true;
-
-
 
