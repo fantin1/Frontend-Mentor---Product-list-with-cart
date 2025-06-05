@@ -96,7 +96,7 @@ class Product {
 };
 
 class Cart {
-    #cartEl = document.querySelector('.cart');
+    cartEl = document.querySelector('.cart');
     #countEl = document.querySelector('.cart-quant');
     #totalCostEl = document.querySelector('.total-cost');
     #cartEmptyEl = document.querySelector('.cart-empty');
@@ -161,6 +161,7 @@ class Cart {
     excludeItem(product) {
         this.#count -= product.count;
         this.#totalCost -= product.count * product.price;
+        product.cartParentEl.remove();
         product.count = 0;
         this.updateDisplay(product);
     }
@@ -210,6 +211,15 @@ fetch('./data.json').then((response) => response.json()).then((json) => {
         const product = products[prodEl.dataset.index];
         cart.removeFromCart(product);
     });
+
+    cart.cartEl.addEventListener('click', function(e){
+
+        if(!e.target.closest('.remove-btn')) return;
+
+        const prodEl = e.target.closest('.cart-item');
+        const product = products[prodEl.dataset.index];
+        cart.excludeItem(product);
+    })
 
 })
 
