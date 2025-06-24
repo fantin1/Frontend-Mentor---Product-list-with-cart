@@ -98,13 +98,27 @@ class Product {
 class Cart {
     cartEl = document.querySelector('.cart');
     #countEl = document.querySelector('.cart-quant');
-    #totalCostEl = document.querySelector('.total-cost');
+    #cartTotalEl = document.querySelector('.cart-total');
     #cartEmptyEl = document.querySelector('.cart-empty');
     #carbonNeutralEl = document.querySelector('.total-carbon-neutral');
     #cartOrdersEl = document.querySelector('.cart-orders');
+    #confirmBtn = document.querySelector('.confirm-btn');
     #count = 0;
     #totalCost = 0;
+
+
+    modalEl = document.querySelector('.modal-overlay');
+    #modalOrdersEl = document.querySelector('modal-orders');
+    #modalTotalEl = document.querySelector('.modal-total');
+    #newOrderBtn = document.querySelector('.new-order-btn');
+
+
     constructor() {
+        this.#confirmBtn.addEventListener('click', this.checkout.bind(this));
+        this.#newOrderBtn.addEventListener('click', this.newOrder.bind(this));
+        this.modalEl.addEventListener('click', function(e){
+            if(e.target.classList.contains('modal-overlay')) this.closeModal();
+        }.bind(this))
     };
 
     startCart() {
@@ -174,8 +188,45 @@ class Cart {
     updateDisplay(product) {
         product.updateDisplay()
         this.#countEl.textContent = this.#count;
-        this.#totalCostEl.textContent = `$${this.#totalCost}`;
+        this.#cartTotalEl.textContent = `$${this.#totalCost}`;
+        this.#modalTotalEl.textContent = `$${this.#totalCost}`;
         if (this.#count === 0) this.emptyCart();
+    }
+
+    checkout(){
+        this.modalEl.classList.remove('hidden');
+        
+        const html = `
+                <div class="modal-item" data-index="0">
+
+                    <div class="modal-flex">
+                        <div class="thumbnail">
+                            <img src="assets/images/image-tiramisu-thumbnail.jpg" alt="">
+                        </div>
+                        <div class="item-info">
+                            <h3 class="item-name">Classic Tiramissu</h3>
+                            <p class="order">
+                                <span class="order-quant">1x</span>
+                                <span class="order-unit-value">@ $5.50</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span class="order-item-total">$5.50</span>
+                    </div>
+                </div>
+            `
+
+        
+    }
+
+    newOrder(){
+        this.closeModal();
+    }
+
+    closeModal(){
+        this.modalEl.classList.add('hidden');
     }
 };
 

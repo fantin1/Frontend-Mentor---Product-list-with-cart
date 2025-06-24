@@ -16,7 +16,7 @@
 
     <!-- MODAL -->
 
-    <div class="modal-overlay">
+    <div class="modal-overlay hidden">
         <div class="modal">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M21 32.121L13.5 24.6195L15.6195 22.5L21 27.879L32.3775 16.5L34.5 18.6225L21 32.121Z"
@@ -33,29 +33,8 @@
             
 
             <div class="modal-orders">
-                <!-- item start -->
-                <div class="modal-item" data-index="0">
-
-                    <div class="modal-flex">
-                        <div class="thumbnail">
-                            <img src="assets/images/image-tiramisu-thumbnail.jpg" alt="">
-                        </div>
-                        <div class="item-info">
-                            <h3 class="item-name">Classic Tiramissu</h3>
-                            <p class="order">
-                                <span class="order-quant">1x</span>
-                                <span class="order-unit-value">@ $5.50</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <span class="order-item-total">$5.50</span>
-                    </div>
-                    
-                </div>
-                <!-- item end -->
-                 <!-- item start -->
+                
+<!--                 
                 <div class="modal-item" data-index="0">
 
                     <div class="modal-flex">
@@ -75,13 +54,15 @@
                         <span class="order-item-total">$5.50</span>
                     </div>
                 </div>
-                <!-- item end -->
+                
+                 -->
+
                 <div>
-                    <p class="order-total"><span>Order Total</span><span class="total-cost">$46.50</span></p>
+                    <p class="order-total"><span>Order Total</span><span class="total-cost modal-total">$46.50</span></p>
                 </div>
                 
             </div>
-            <button class="checkout-btn">
+            <button class="checkout-btn new-order-btn">
                     Start New Order
                 </button>
 
@@ -180,7 +161,7 @@
 
             <div class="total-carbon-neutral hidden">
                 <div>
-                    <p class="order-total"><span>Order Total</span><span class="total-cost">$46.50</span></p>
+                    <p class="order-total"><span>Order Total</span><span class="total-cost cart-total">$46.50</span></p>
                 </div>
                 <div class="carbon-neutral-container">
                     <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" fill="none" viewBox="0 0 21 20">
@@ -194,7 +175,7 @@
 
                         </span>This is a <strong>carbon-neutral</strong> delivery</p>
                 </div>
-                <button class="checkout-btn">
+                <button class="checkout-btn confirm-btn">
                     Confirm Order
                 </button>
             </div>
