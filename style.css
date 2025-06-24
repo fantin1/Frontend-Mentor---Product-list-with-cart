@@ -325,20 +325,31 @@ body {
     text-align: center;
 }
 
-.confirm-btn{
+.checkout-btn{
     border-radius: 1000px;
     color: var(--clr-neutral--100);
     background-color: var(--clr-primary--1);
     width: 100%;
     padding: 1em 0;
     border: none;
+    font-weight: var(--fw-bold);
 }
 
-.confirm-btn:hover{
+.checkout-btn:hover{
     color: var(--clr-neutral--100);
     background-color: var(--clr-neutral--900);
     cursor: pointer;
 }
+
+
+
+
+
+
+
+
+
+
 
 
 .modal-overlay{
@@ -354,17 +365,27 @@ body {
     justify-content: center;
 }
 
+@media (min-width: 768px){
+    .modal{
+        width: 60vw;
+        max-width: 500px;
+    }
+}
+
 .modal{
-    width: 60vw;
+    display: grid;
+    gap: 1em;
+    border-radius: .5em;
     background-color: var(--clr-neutral--50);
     padding: 2em;
 }
 
 .modal-header{
-
+    font-size: 2rem;
 }
 
 .modal-message{
+    font-size: .9rem;
     color: var(--clr-neutral--500);
 }
 
