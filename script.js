@@ -96,6 +96,7 @@ class Product {
 };
 
 class Cart {
+    products = [];
     cartEl = document.querySelector('.cart');
     #countEl = document.querySelector('.cart-quant');
     #cartTotalEl = document.querySelector('.cart-total');
@@ -108,7 +109,7 @@ class Cart {
 
 
     modalEl = document.querySelector('.modal-overlay');
-    #modalOrdersEl = document.querySelector('modal-orders');
+    #modalOrdersEl = document.querySelector('.modal-orders');
     #modalTotalEl = document.querySelector('.modal-total');
     #newOrderBtn = document.querySelector('.new-order-btn');
 
@@ -116,9 +117,10 @@ class Cart {
     constructor() {
         this.#confirmBtn.addEventListener('click', this.checkout.bind(this));
         this.#newOrderBtn.addEventListener('click', this.newOrder.bind(this));
-        this.modalEl.addEventListener('click', function(e){
-            if(e.target.classList.contains('modal-overlay')) this.closeModal();
+        this.modalEl.addEventListener('click', function (e) {
+            if (e.target.classList.contains('modal-overlay')) this.closeModal();
         }.bind(this))
+        console.log(this.#modalOrdersEl)
     };
 
     startCart() {
@@ -166,7 +168,7 @@ class Cart {
             product.count = 0;
             product.cartParentEl.remove();
         }
-        
+
         this.#count--;
         this.#totalCost -= product.price;
         this.updateDisplay(product);
@@ -189,43 +191,57 @@ class Cart {
         product.updateDisplay()
         this.#countEl.textContent = this.#count;
         this.#cartTotalEl.textContent = `$${this.#totalCost}`;
-        this.#modalTotalEl.textContent = `$${this.#totalCost}`;
+        //this.#modalTotalEl.textContent = `$${this.#totalCost}`;
         if (this.#count === 0) this.emptyCart();
     }
 
-    checkout(){
+    checkout() {
         this.modalEl.classList.remove('hidden');
-        
-        const html = `
-                <div class="modal-item" data-index="0">
+        this.products.forEach((p) => {
+            if (p.count > 0) {
+                const html = `
+                <div class="modal-item" data-index="${p.index}">
 
                     <div class="modal-flex">
                         <div class="thumbnail">
-                            <img src="assets/images/image-tiramisu-thumbnail.jpg" alt="">
+                            <img src="${p.thumbnail}" alt="${p.name}">
                         </div>
                         <div class="item-info">
-                            <h3 class="item-name">Classic Tiramissu</h3>
+                            <h3 class="item-name">${p.name}</h3>
                             <p class="order">
-                                <span class="order-quant">1x</span>
-                                <span class="order-unit-value">@ $5.50</span>
+                                <span class="order-quant">${p.count}x</span>
+                                <span class="order-unit-value">@ $${p.price}</span>
                             </p>
                         </div>
                     </div>
 
                     <div>
-                        <span class="order-item-total">$5.50</span>
+                        <span class="order-item-total">$${p.price * p.count}</span>
                     </div>
                 </div>
             `
+                this.#modalOrdersEl.insertAdjacentHTML("beforeend", html);
+            }
 
-        
+        })
+
+        const totalHtml = `
+                <div>
+                    <p class="order-total"><span>Order Total</span><span class="total-cost modal-total">$${this.#totalCost}</span></p>
+                </div>
+                
+            </div>`
+        this.#modalOrdersEl.insertAdjacentHTML("beforeend", totalHtml);
+
+
+
     }
 
-    newOrder(){
+    newOrder() {
         this.closeModal();
     }
 
-    closeModal(){
+    closeModal() {
         this.modalEl.classList.add('hidden');
     }
 };
@@ -235,14 +251,13 @@ const cart = new Cart();
 
 fetch('./data.json').then((response) => response.json()).then((json) => {
     const data = json;
-    const products = [];
 
     data.forEach((data, i) => {
         const product = new Product(i, data.name, data.category, data.price,
             data.image.thumbnail, data.image.mobile, data.image.tablet, data.image.desktop);
         product.addToGrid();
         product.assignDisplayHtmlElements();
-        products.push(product);
+        cart.products.push(product);
     });
 
     displayGrid.addEventListener('click', function (e) {
@@ -250,7 +265,7 @@ fetch('./data.json').then((response) => response.json()).then((json) => {
         if (!(e.target.closest('.add-btn') || e.target.closest('.increment-btn'))) return;
 
         const prodEl = e.target.closest('.dessert');
-        const product = products[prodEl.dataset.index];
+        const product = cart.products[prodEl.dataset.index];
         cart.addToCart(product);
     });
 
@@ -259,16 +274,16 @@ fetch('./data.json').then((response) => response.json()).then((json) => {
         if (!e.target.closest('.decrement-btn')) return;
 
         const prodEl = e.target.closest('.dessert');
-        const product = products[prodEl.dataset.index];
+        const product = cart.products[prodEl.dataset.index];
         cart.removeFromCart(product);
     });
 
-    cart.cartEl.addEventListener('click', function(e){
+    cart.cartEl.addEventListener('click', function (e) {
 
-        if(!e.target.closest('.remove-btn')) return;
+        if (!e.target.closest('.remove-btn')) return;
 
         const prodEl = e.target.closest('.cart-item');
-        const product = products[prodEl.dataset.index];
+        const product = cart.products[prodEl.dataset.index];
         cart.excludeItem(product);
     })
 
