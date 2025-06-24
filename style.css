@@ -80,6 +80,7 @@ body {
     background-color: var(--clr-neutral--100);
     font-weight: var(--fw-normal);
     color: var(--clr-neutral--900);
+    overflow-x: hidden;
 }
 
 .dessert {
@@ -353,9 +354,8 @@ body {
 
 
 .modal-overlay{
-    background-color: rgba(0,0,0, .5);
     position: absolute;
-    height: 100vh;
+    height: 100%;
     width: 100vw;
     z-index: 5000;
     top: 0;
@@ -369,6 +369,16 @@ body {
     .modal{
         width: 60vw;
         max-width: 500px;
+    }
+}
+
+@media (max-width: 768px){
+    .modal-overlay{
+        align-items: end;
+    }
+    .modal{
+        margin-top: 7em;
+        width: 100vw;
     }
 }
 
@@ -428,6 +438,12 @@ body {
     padding: 2em 0 1em 0;
 }
 
-h5{
-    
+.screen-blocker{
+    background-color: rgba(0,0,0, .5);
+    position: absolute;
+    height: 100%;
+    width: 100vw;
+    z-index: 4999;
+    top: 0;
+    left: 0;
 }

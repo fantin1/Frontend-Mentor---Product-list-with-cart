@@ -66,7 +66,7 @@ class Product {
                     <div class="dessert-text">
                         <h2 class="dessert-category">${this.category}</h2>
                         <h3 class="dessert-name">${this.name}</h3>
-                        <p class="price">$${this.price}</p>
+                        <p class="price">$${this.price.toFixed(2)}</p>
                     </div>
                 </div> 
         `
@@ -91,7 +91,7 @@ class Product {
         }
         this.#displayCountEl.textContent = this.count;
         this.cartCountEl.textContent = `${this.count}x`;
-        this.cartTotalEl.textContent = `$${this.count * this.price}`
+        this.cartTotalEl.textContent = `$${(this.count * this.price).toFixed(2)}`
     }
 };
 
@@ -109,6 +109,7 @@ class Cart {
 
 
     modalEl = document.querySelector('.modal-overlay');
+    #screenBlocker = document.querySelector('.screen-blocker');
     #modalOrdersEl = document.querySelector('.modal-orders');
     #modalTotalEl = document.querySelector('.modal-total');
     #newOrderBtn = document.querySelector('.new-order-btn');
@@ -117,10 +118,10 @@ class Cart {
     constructor() {
         this.#confirmBtn.addEventListener('click', this.checkout.bind(this));
         this.#newOrderBtn.addEventListener('click', this.newOrder.bind(this));
+        this.#screenBlocker.addEventListener('click', this.closeModal.bind(this));
         this.modalEl.addEventListener('click', function (e) {
             if (e.target.classList.contains('modal-overlay')) this.closeModal();
         }.bind(this))
-        console.log(this.#modalOrdersEl)
     };
 
     startCart() {
@@ -138,8 +139,8 @@ class Cart {
                     <h3 class="item-name">${product.name}</h3>
                     <p class="order">
                         <span class="order-quant">1x</span>
-                        <span class="order-unit-value">@ $${product.price}</span>
-                        <span class="order-item-total">$${product.price}</span>
+                        <span class="order-unit-value">@ $${product.price.toFixed(2)}</span>
+                        <span class="order-item-total">$${product.price.toFixed(2)}</span>
                     </p>
                 </div>
                 <div>
@@ -196,7 +197,15 @@ class Cart {
     }
 
     checkout() {
+        const body = document.body,
+            html = document.documentElement;
+        const height = Math.max(body.scrollHeight, body.offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight);
+        this.#screenBlocker.style.height = height + 'px';
         this.modalEl.classList.remove('hidden');
+        this.#screenBlocker.classList.remove('hidden');
+        this.#modalOrdersEl.innerHTML = '';
+        window.scrollTo(0, 0);
         this.products.forEach((p) => {
             if (p.count > 0) {
                 const html = `
@@ -210,39 +219,37 @@ class Cart {
                             <h3 class="item-name">${p.name}</h3>
                             <p class="order">
                                 <span class="order-quant">${p.count}x</span>
-                                <span class="order-unit-value">@ $${p.price}</span>
+                                <span class="order-unit-value">@ $${p.price.toFixed(2)}</span>
                             </p>
                         </div>
                     </div>
 
                     <div>
-                        <span class="order-item-total">$${p.price * p.count}</span>
+                        <span class="order-item-total">$${(p.price * p.count).toFixed(2)}</span>
                     </div>
                 </div>
             `
                 this.#modalOrdersEl.insertAdjacentHTML("beforeend", html);
             }
-
         })
 
         const totalHtml = `
                 <div>
-                    <p class="order-total"><span>Order Total</span><span class="total-cost modal-total">$${this.#totalCost}</span></p>
-                </div>
-                
-            </div>`
+                    <p class="order-total"><span>Order Total</span><span class="total-cost modal-total">$${this.#totalCost.toFixed(2)}</span></p>
+                </div>`
         this.#modalOrdersEl.insertAdjacentHTML("beforeend", totalHtml);
-
-
-
     }
 
     newOrder() {
+        this.products.forEach((p) => {
+            if (p.count > 0) this.excludeItem(p);
+        })
         this.closeModal();
     }
 
     closeModal() {
         this.modalEl.classList.add('hidden');
+        this.#screenBlocker.classList.add('hidden');
     }
 };
 
