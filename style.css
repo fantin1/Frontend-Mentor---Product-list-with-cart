@@ -24,6 +24,7 @@
     --clr-neutral--50: hsl(20, 50%, 98%);
     --clr-neutral--100: hsl(13, 31%, 94%);
     --clr-neutral--300: hsl(14, 25%, 72%);
+    --clr-neutral--300-hsl: 4, 25%, 72%;
     --clr-neutral--400: hsl(7, 20%, 60%);
     --clr-neutral--500: hsl(12, 20%, 44%);
     --clr-neutral--900: hsl(14, 65%, 9%);
@@ -368,16 +369,17 @@ body {
 }
 
 .modal-orders{
-
+    border-radius: .5em;
+    background-color: var(--clr-neutral--100);
+    padding: 1em;
 }
 
 .modal-item{
-    background-color: var(--clr-neutral--100);
-    border-radius: .5em;
-    padding: 1em;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-bottom: 1px solid hsla(var(--clr-neutral--300-hsl),.2);
+    padding: .5em 0;
 }
 
 .thumbnail{
@@ -392,7 +394,16 @@ body {
     border-radius: inherit;
 }
 
-
-.flex{
+.modal-flex{
     display: flex;
+    gap: 1em;
 }
+
+.modal .order-item-total{
+    color: var(--clr-neutral--900);
+}
+
+.modal .order-total{
+    padding: 2em 0 1em 0;
+}
+

@@ -11,6 +11,11 @@
 
 <body>
 
+
+
+
+    <!-- MODAL -->
+
     <div class="modal-overlay">
         <div class="modal">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,9 +30,10 @@
             <p class="modal-message">We hope you enjoy your food</p>
 
             <div class="modal-orders">
+                <!-- item start -->
                 <div class="modal-item" data-index="0">
 
-                    <div class="flex">
+                    <div class="modal-flex">
                         <div class="thumbnail">
                             <img src="assets/images/image-tiramisu-thumbnail.jpg" alt="">
                         </div>
@@ -40,11 +46,35 @@
                         </div>
                     </div>
 
+                    <div>
+                        <span class="order-item-total">$5.50</span>
+                    </div>
+                    
+                </div>
+                <!-- item end -->
+                 <!-- item start -->
+                <div class="modal-item" data-index="0">
 
+                    <div class="modal-flex">
+                        <div class="thumbnail">
+                            <img src="assets/images/image-tiramisu-thumbnail.jpg" alt="">
+                        </div>
+                        <div class="item-info">
+                            <h3 class="item-name">Classic Tiramissu</h3>
+                            <p class="order">
+                                <span class="order-quant">1x</span>
+                                <span class="order-unit-value">@ $5.50</span>
+                            </p>
+                        </div>
+                    </div>
 
                     <div>
                         <span class="order-item-total">$5.50</span>
                     </div>
+                </div>
+                <!-- item end -->
+                <div>
+                    <p class="order-total"><span>Order Total</span><span class="total-cost">$46.50</span></p>
                 </div>
 
             </div>
@@ -52,7 +82,13 @@
         </div>
     </div>
 
+
+
+
+
     <div class="desserts-cart-grid">
+
+        <!-- Grid -->
         <div class="desserts">
             <h1 class="desserts-header">Desserts</h1>
             <div class="desserts-grid">
@@ -99,14 +135,10 @@
 
 
             </div>
-
-
-
-
-
-
-
         </div>
+
+
+        <!-- Cart -->
 
         <div class="cart">
             <h2 class="cart-title">Your Cart (<span class="cart-quant">0</span>)</h2>
@@ -120,7 +152,7 @@
 
             </div>
 
-            
+<!--             
             <div class="cart-item" data-index="0">
                 <div class="item-info">
                     <h3 class="item-name">Classic Tiramissu</h3>
@@ -138,7 +170,7 @@
                         </svg>
                     </button>
                 </div>
-            </div> 
+            </div>  -->
 
             <div class="total-carbon-neutral hidden">
                 <div>
